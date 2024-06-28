@@ -13,6 +13,7 @@ const App = () => {
     
     <Router>
       <div>
+        
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/youtube" element={<YoutubeDownloader/>}/>
           <Route path="/spotify" element={<Spotifypage/>}/>
         </Routes>
+        
       </div>
     </Router>
     

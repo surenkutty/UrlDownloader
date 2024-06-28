@@ -1,6 +1,6 @@
 import youtube from '../images/youtubelogo.png';
 import image from '../images/instalogo.png';
-
+import background from '../images/aibackground.jpeg';
 import spotifylogo from '../images/spotifylogo.jpg'
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -115,7 +115,8 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <h1>Video Downloader</h1>
+      <h1>Url <span> Downloader</span></h1>
+      <h2>Search To Enjoy Your Journey!!</h2>
       <form onSubmit={handleSubmit} className="form-container">
         <input
           type="url"
@@ -156,13 +157,13 @@ const HomePage = () => {
       )}
       <div className="service-links">
         <Link to="/downloader">
-          <img src={image} alt="Instagram" className="responsive-image" />
+          <img src={image} alt="Instagram" className="instaimg" />
         </Link>
         <Link to="/youtube">
-          <img src={youtube} alt="YouTube" className="responsive-image" />
+          <img src={youtube} alt="YouTube" className="youtubeimg" />
         </Link>
         <Link to="/spotify">
-          <img src={spotifylogo} alt="Spotify" className="responsive-image" />
+          <img src={spotifylogo} alt="Spotify" className="spotifyimg" />
         </Link>
       </div>
     </div>

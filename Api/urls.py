@@ -9,7 +9,7 @@ from .views import InstagramAPIView,YoutubeDownloadVideoView,YoutubeVideoInfoVie
 urlpatterns = [
     # Your Django app views
     path('api/get-video-url/', InstagramAPIView.as_view(), name='get_video_url'),
-    path('spotify/',SpotifyApiView.as_view(), name='spotify'),
+    path('api/spotify/',SpotifyApiView.as_view(), name='spotify'),
     
     path('get_youtube/', YoutubeVideoInfoView.as_view(), name='get_video_info'),
     path('download_video/', YoutubeDownloadVideoView.as_view(), name='download_video'),

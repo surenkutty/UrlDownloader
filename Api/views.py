@@ -82,33 +82,41 @@ class YoutubeDownloadVideoView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #spotify views
-import subprocess
+# downloader/views.py
+
+
+
+
+import tempfile
 import os
-
-
-
+import subprocess
+import shutil
 
 class SpotifyApiView(APIView):
-     def post(self, request):
+    def post(self, request):
         serializer = SpotifySerializer(data=request.data)
         if serializer.is_valid():
             url = serializer.validated_data['url']
-            # Use spotify-dl to download the song or playlist
+            
             try:
-                download_directory = './downloads'
-                if not os.path.exists(download_directory):
-                    os.makedirs(download_directory)
-
-                # Running spotify_dl command
-                result = subprocess.run(
-                    ['spotify_dl', '-l', url, '-o', download_directory],
-                    capture_output=True, text=True
-                )
-
-                if result.returncode == 0:
-                    return Response({"message": "Download started", "details": result.stdout}, status=status.HTTP_200_OK)
-                else:
-                    return Response({"error": result.stderr}, status=status.HTTP_400_BAD_REQUEST)
+                download_result = download_spotify_content(url)
+                return Response(download_result, status=status.HTTP_200_OK)
             except Exception as e:
-                return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def download_spotify_content(url):
+    with tempfile.TemporaryDirectory() as temp_dir:
+        command = [
+            'spotify_dl', '--url', url, '--output', temp_dir
+        ]
+        
+        result = subprocess.run(command, capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            raise Exception(f"Download failed: {result.stderr}")
+
+        files = os.listdir(temp_dir)
+        
+        # Optionally move or process files further
+        return {"message": "Download completed", "files": files}
