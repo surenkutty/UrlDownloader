@@ -43,20 +43,21 @@ body, html {
   display: flex;
   justify-content: flex-end;
   margin-left: 650px;
-  margin-bottom: 100px;
+  /* margin-bottom: 100px; */
   /* width: 100%; */
+  margin-top: 300px;
 
 }
 
 .animated-image {
- border: 1px solid black;
+ /* border: 1px solid black; */
   margin-left: 200px;
   margin-right: 100px;
   /* margin-bottom: 100px; */
   /* margin-top: 10px; */
-  width: 900px;
-  max-width: 2000px;
-  animation: slideUp 2s ease-out forwards;
+  width: 1000px;
+  max-width: 1000px;
+  animation: slideUp 1s ease-out forwards;
 }
 
 @keyframes slideUp {

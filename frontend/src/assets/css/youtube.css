@@ -1,0 +1,158 @@
+/* src/components/YoutubeDownloader.css */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .youtube-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: #f0f0f0;
+    min-height: 100vh;
+    text-align: center;
+  }
+  
+  h1 {
+    color: red;
+    margin-bottom: 20px;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .url-input {
+    padding: 10px;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color:blue;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-button:hover {
+    background-color: #45a049;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  .video-info {
+    margin-top: 20px;
+    animation: slideUp 0.5s ease-out;
+  }
+  
+  .video-info h2 {
+    margin-bottom: 10px;
+    height: 200px;
+    width: 300px;
+    margin-left: 1000px;
+  }
+  .youtube-thumbnail{
+    height: 400px;
+    width: 400px;
+    margin-right: 450px;
+    margin-bottom: 400px;
+    border: 1px solid black;
+
+  }
+  
+  .streams-container {
+    height: 300px;
+    margin-left: 500px;
+    margin-right: 500px;
+    /* width: 300px; */
+    border: 1px solid red;
+    /* margin-top: 20px; */
+    text-align: left;
+    /* margin-bottom: 600px; */
+  }
+  
+  .stream-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .stream-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .stream-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .stream-button.selected {
+    background-color: #28a745;
+  }
+  
+  .download-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .download-button:hover {
+    background-color: #45a049;
+  }
+  
+  .animated {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 1s forwards;
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
+  @media (max-width: 768px) {
+    .url-input {
+      width: 90%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .url-input {
+      width: 90%;
+    }
+  }
+  
