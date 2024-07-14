@@ -37,7 +37,7 @@ const DownloadForm = () => {
   };
 
   return (
-    <div>
+    <div className='insta-page'>
       <h1>Instagram Video Downloader</h1>
       <form onSubmit={handleSubmit}>
         <input

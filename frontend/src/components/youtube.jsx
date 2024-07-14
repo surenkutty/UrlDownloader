@@ -8,10 +8,21 @@ function YoutubeDownloader() {
 
   const fetchVideoInfo = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/get_youtube/', { params: { url } });
+      const response = await axios.get('http://localhost:8000/get_youtube/', { params: { url } });
       setVideoInfo(response.data);
     } catch (error) {
-      console.error('Error fetching video info:', error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Server responded with error:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Request made but no response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error('Error setting up the request:', error.message);
+      }
+      // Handle error state in your component
+      setError('Error fetching video information');
     }
   };
 
@@ -30,10 +41,13 @@ function YoutubeDownloader() {
   };
 
   return (
-    <div>
+    <div className="youtube-page">
       <h1>YouTube Video Downloader</h1>
-      <input type="text" value={url} onChange={e => setUrl(e.target.value)} placeholder="Enter YouTube URL" />
-      <button onClick={fetchVideoInfo}>Fetch Video Info</button>
+      <div className="form-container" >
+      <input className="url-input" type="text" value={url} onChange={e => setUrl(e.target.value)} placeholder="Enter YouTube URL" />
+      <button onClick={fetchVideoInfo} className="search-button">Fetch Video Info</button>
+      </div>
+     
 
       {videoInfo && (
         <div>
