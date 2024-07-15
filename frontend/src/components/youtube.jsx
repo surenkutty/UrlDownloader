@@ -55,62 +55,69 @@ function YoutubeDownloader() {
 
   return (
     <div className="youtube-page">
-      <h1>YouTube Video Downloader</h1>
-      <div className="form-container animated">
-        <input
-          type="text"
-          value={url}
-          onChange={e => setUrl(e.target.value)}
-          placeholder="Enter YouTube URL"
-          className="url-input"
-        />
-        <button onClick={fetchVideoInfo} className="search-button">
-          {loading ? 'Loading...' : 'Fetch Video Info'}
-        </button>
-      </div>
+    <h1>YouTube Video Downloader</h1>
+    <div className="youtube-container animated">
+      <input
+        type="text"
+        value={url}
+        onChange={e => setUrl(e.target.value)}
+        placeholder="Enter YouTube URL"
+        className="url-input"
+      />
+      <button onClick={fetchVideoInfo} className="search-button">
+        {loading ? 'Loading...' : 'Fetch Video Info'}
+      </button>
+    </div>
 
-      {error && <div className="error-message">{error}</div>}
+    {error && <div className="error-message">{error}</div>}
 
-      {videoInfo && (
-        <div className="video-info animated">
-          <h2>{videoInfo.title}</h2>
-          <img src={videoInfo.thumbnail_url} className='youtube-thumbnail' alt="thumbnail" />
-          <div className="streams-container">
-            <h3>Video Streams</h3>
-            <div className="stream-list">
-              {videoInfo.streams
-                .filter(stream => stream.type === 'video')
-                .map(stream => (
-                  <button
-                    key={stream.itag}
-                    onClick={() => setSelectedItag(stream.itag)}
-                    className={`stream-button ${selectedItag === stream.itag ? 'selected' : ''}`}
-                  >
-                    {stream.resolution} - {stream.type}
-                  </button>
-                ))}
-            </div>
-            <h3>Audio Streams</h3>
-            <div className="stream-list">
-              {videoInfo.streams
-                .filter(stream => stream.type === 'audio')
-                .map(stream => (
-                  <button
-                    key={stream.itag}
-                    onClick={() => setSelectedItag(stream.itag)}
-                    className={`stream-button ${selectedItag === stream.itag ? 'selected' : ''}`}
-                  >
-                    {stream.abr} - {stream.type}
-                  </button>
-                ))}
+    {videoInfo && (
+      <div className="video-info animated">
+        <div className="info-container">
+          <div className="thumbnail-container">
+            <img src={videoInfo.thumbnail_url} alt="thumbnail" className="thumbnail" />
+          </div>
+          <div className="details-container">
+            <h2 className='video-title'>{videoInfo.title}</h2>
+            <div className="streams-container">
+              <h3>Video Streams</h3>
+              <div className="stream-list">
+                {videoInfo.streams
+                  .filter(stream => stream.type === 'video')
+                  .map(stream => (
+                    <button
+                      key={stream.itag}
+                      onClick={() => setSelectedItag(stream.itag)}
+                      className={`stream-button ${selectedItag === stream.itag ? 'selected' : ''}`}
+                    >
+                      {stream.resolution} - {stream.type}
+                    </button>
+                  ))}
+              </div>
+              <h3>Audio Streams</h3>
+              <div className="stream-list">
+                {videoInfo.streams
+                  .filter(stream => stream.type === 'audio')
+                  .map(stream => (
+                    <button
+                      key={stream.itag}
+                      onClick={() => setSelectedItag(stream.itag)}
+                      className={`stream-button ${selectedItag === stream.itag ? 'selected' : ''}`}
+                    >
+                      {stream.abr} - {stream.type}
+                    </button>
+                  ))}
+              </div>
             </div>
           </div>
-          <button onClick={downloadVideo} className="download-button">
-            {downloading ? 'Downloading...' : 'Download'}
-          </button>
         </div>
-      )}
-    </div>
+        <button onClick={downloadVideo} className="download-button">
+          {downloading ? 'Downloading...' : 'Download'}
+        </button>
+      </div>
+    )}
+  </div>
+
   );
 }
 
