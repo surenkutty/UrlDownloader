@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import ErrorBoundary from './errorboundery'; // Import the ErrorBoundary component
+import ErrorBoundary from './errorboundery'; 
+import '../assets/css/spotify.css';
+// import spotifybackground from '../images/spotify-background.jpeg';
+// Import the ErrorBoundary component
 
 function SpotifyPage() {
   const [url, setUrl] = useState('');
@@ -34,7 +37,7 @@ function SpotifyPage() {
 
   return (
     <ErrorBoundary>
-      <div className="App">
+      <div className="spotify-page">
         <h1>Spotify URL Downloader</h1>
         <input
           type="text"

@@ -1,0 +1,58 @@
+.secondpage{
+    /* background-color: black; */
+    height: 400px;
+
+}
+.s2-head{
+    margin-top: 40px;
+    color: lightslategrey;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    font-family:  sans-serif;
+}
+.s2span{
+    padding-left: 20px;
+}
+.s2-body{
+    margin-top: 0;
+    color: black;
+    /* font-weight:800; */
+    
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+    font-style:oblique;
+    /* margin-bottom: 40px; */
+    font-size: 32px;
+        line-height: 0.98;
+        margin-bottom: 16px;
+        letter-spacing: -1.22px;
+}
+.s2para{
+    /* margin-bottom: 10px; */
+    margin-top: 0;
+    /* font-size: 15px; */
+    /* font-weight: bold; */
+    font-family:sans-serif;
+}
+
+.contact-button{
+    /* box-sizing: border-box; */
+    border-radius: 30px;
+    cursor: pointer;
+    background-color: black;
+    height: 40px;
+    width: 130px;
+    color: white;
+    margin-right: 30px;
+    padding: 5px;
+}
+.Learn-more{
+    /* box-sizing: border-box; */
+    border-radius: 30px;
+    cursor: pointer;
+    background-color:white;
+    height: 40px;
+    width: 130px;
+    color:black;
+    margin-right: 30px;
+}

@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import '../assets/css/secondpage.css';
 
 const HomePage = () => {
     const [url, setUrl] = useState('');
@@ -54,7 +55,23 @@ const HomePage = () => {
           <img src={spotifylogo} alt="Spotify" className="spotifyimg" />
         </Link>
       </div>
+      <div className='secondpage'>
+        <h3 className='s2-head'>
+          Free<span className='s2span'>Url Downloader</span>
+
+        </h3>
+        <h4 className='s2-body'>Video Downloader</h4>
+        <p className='s2para'>With This Platfrom,You Can Easily Download Any Video <br />
+          <span>
+          From multisocial media for free
+          </span> </p>
+        <button className='contact-button'>Contact</button>
+        <button className='Learn-more'>LearnMore</button>
+
+
+      </div>
     </div>
+    
 
     
     

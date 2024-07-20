@@ -17,6 +17,7 @@
 
 body, html {
   background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%) ;
+  /* background-color: white; */
    
   height: 120vh;
   margin: 0;
@@ -35,17 +36,19 @@ body, html {
 }
 
 .image-container {
+  margin-bottom: 300px;
   
   /* border: 1px solid black; */
   position: absolute;
-  bottom: -100px; 
+  /* bottom: -100px;  */
   right: 0;
   display: flex;
   justify-content: flex-end;
   margin-left: 650px;
   /* margin-bottom: 100px; */
   /* width: 100%; */
-  margin-top: 300px;
+  /* margin-top: 300px; */
+  
 
 }
 
@@ -55,9 +58,10 @@ body, html {
   margin-right: 100px;
   /* margin-bottom: 100px; */
   /* margin-top: 10px; */
-  width: 1000px;
+  width: 100%;
   max-width: 1000px;
   animation: slideUp 1s ease-out forwards;
+  
 }
 
 @keyframes slideUp {
@@ -300,53 +304,4 @@ h2{
   margin-top: 10px;
 }
 
-
-/* navbarcss */
-/* src/components/Navbar.css */
-
-.navbar {
-  padding-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  /* background-color: #333; */
-  background-color: #a6c1ee;
-  color:black;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.navbar-logo a {
-  text-decoration: none;
-  color:white;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.navbar-links {
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color:white;
- 
-}
-
-.navbar-links li {
-  display: inline;
-  
-}
-
-.navbar-links a {
-  text-decoration: none;
-  color: white;
-  font-size: 1rem;
-}
-
-.navbar-links a:hover {
-  color: #ddd;
-}
-  
 
