@@ -16,9 +16,9 @@ body, html {
   text-align: center;
 }
 
-h1 {
+/* .animated h1 {
   margin-bottom: 20px;
-}
+} */
 
 .youtube-container {
   display: flex;

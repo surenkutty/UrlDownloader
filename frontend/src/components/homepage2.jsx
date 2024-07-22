@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/secondpage.css';
+import '../assets/css/tutorial.css';
 
 const HomePage = () => {
     const [url, setUrl] = useState('');
@@ -26,8 +27,11 @@ const HomePage = () => {
   
   return (
     <div className="home-page">
+      <div className="box">
       <h1 className='animated'>Url <span> Downloader</span></h1>
       <h2 className='animated'>Search To Enjoy Your Journey!!</h2>
+      </div>
+      
       <div className="image-container">
         <img src={background} alt="Animated Image" className="animated-image" />
       </div>
@@ -66,7 +70,43 @@ const HomePage = () => {
           From multisocial media for free
           </span> </p>
         <button className='contact-button'>Contact</button>
-        <button className='Learn-more'>LearnMore</button>
+        <button className='Learn-more'>LearnMore </button>
+
+      <section>
+  <div className="s3-section">
+    <div className="s3-picture">
+      <h6>Hello this Picture</h6>
+    </div>
+    <div className="s3-text">
+      <div className="s3-text-top">
+        <h2 className="title01">How To Use</h2>
+        <h3 className='body01'>Url <span className="span01">Downloader</span></h3>
+      </div>
+      <div className="s3-container">
+        <div className="round-s3">01</div>
+        <div className="s3-container-content">
+          <h1 className="s3-title">Find Video</h1>
+          <p className="s3-para">Find the video you want from among the videos on YouTube and copy its link.</p>
+        </div>
+      </div>
+      <div className="s3-container">
+        <div className="round-s3">02</div>
+        <div className="s3-container-content">
+          <h1 className="s3-title">Paste Video</h1>
+          <p className="s3-para">Paste the copied link in the desired box and then wait for the system to display the desired video download links in different formats and sizes.</p>
+        </div>
+      </div>
+      <div className="s3-container">
+        <div className="round-s3">03</div>
+        <div className="s3-container-content">
+          <h1 className="s3-title">Download Video</h1>
+          <p className="s3-para">In the last step, click on download from the displayed list and save the video on your device.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
       </div>

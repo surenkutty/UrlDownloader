@@ -259,7 +259,7 @@ body, html {
   margin-top: 30px;
 }
 
-h1{
+.animated h1{
   font-family: sans-serif;
   color: white;
   
@@ -272,14 +272,20 @@ h1{
 span{
   color: red;
 }
-h1{
+/* .animated h1,h2{
+  
+  
+} */
+ .box h1{
   margin-top: 130px;
-  margin-right: 530px;
-}
-h2{
+ }
+.box h1,h2{
+  
+  
   color:blue;
   font-family:verdana;
   margin-right: 600px;
+  
 }
 .instaimg {
   width: 40px;
