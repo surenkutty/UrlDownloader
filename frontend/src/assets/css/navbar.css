@@ -18,6 +18,10 @@
     color:black;
     font-size: 1.5rem;
     font-weight: bold;
+    
+
+    /* margin-bottom: 10px; */
+    /* background-color: aqua; */
   }
   
   .navbar-links {
@@ -45,4 +49,11 @@
   .navbar-links a:hover {
     color: #ddd;
   }
+  .navbar-logo .logo{
+    height: 60px;
+    width: 90px;
+  }  
+  .navbar-logo{
+    align-items: center;
     
+  }

@@ -16,8 +16,8 @@
 
 
 body, html {
-  background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%) ;
-  /* background-color: white; */
+  /* background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%) ; */
+  background-color:beige;
    
   height: 120vh;
   margin: 0;
@@ -36,7 +36,7 @@ body, html {
 }
 
 .image-container {
-  margin-bottom: 300px;
+  /* margin-bottom: 300px; */
   
   /* border: 1px solid black; */
   position: absolute;
@@ -48,7 +48,8 @@ body, html {
   /* margin-bottom: 100px; */
   /* width: 100%; */
   /* margin-top: 300px; */
-  
+  /* border: 1px solid black; */
+  margin-bottom: 430px;
 
 }
 
@@ -56,11 +57,12 @@ body, html {
  /* border: 1px solid black; */
   margin-left: 200px;
   margin-right: 100px;
-  /* margin-bottom: 100px; */
+  margin-bottom: 400px;
   /* margin-top: 10px; */
   width: 100%;
   max-width: 1000px;
   animation: slideUp 1s ease-out forwards;
+
   
 }
 
