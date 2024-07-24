@@ -1,5 +1,9 @@
 import youtube from '../images/youtubelogo.png';
 import image from '../images/instalogo.png';
+import supporDevices from '../images/supportdevices.svg';
+import videoConvert from '../images/videoconveter.svg';
+import Cardimg3 from '../images/FastDownload1.svg';
+import Cardimg4 from '../images/unlimiited.svg';
 import background from '../images/removeback.png';
 import spotifylogo from '../images/spotifylogo.jpg'
 import React, { useState } from 'react';
@@ -113,6 +117,37 @@ const HomePage = () => {
     </div>
   </div>
 </section>
+<div className='why'>
+  <h1 className='why-head'>Why To Choose</h1>
+  {/* <h2 className='why-h2'>Url Downloader</h2> */}
+</div>
+<section className='s4-section'>
+<div class="card-container">
+        <div class="card">
+            <h1>Support All Devices</h1>
+            <img className='cardimg1' src={supporDevices} alt="" />
+            <p>YouTubeSave is a website-based and online platform that you can easily download from any operating system, including Windows, Linux, iPhone, and Android, without any restrictions.</p>
+        </div>
+        <div class="card">
+            <h1>Online Video Converter</h1>
+            <img className='cardimg2' src={videoConvert} alt="" />
+            <p>Convert downloaded videos from Youtube to different file formats or audio-only formats (e.g., MP3, Mp4)</p>
+        </div>
+        <div class="card">
+            <h1>Fast Downloading</h1>
+            <img className='cardimg3' src={Cardimg3} alt="" />
+            <p>Using YoutubeSave downloader, quickly download your desired videos from YouTube with just a few simple clicks without wasting any time or paying extra fees.</p>
+        </div>
+        <div class="card">
+            <h1>Unlimited Download</h1>
+            <img className='cardimg3' src={Cardimg4} alt="" />
+            <p>Through this free tool, you can download the videos you want at any time and without limiting the number of downloads. Transfer speed is up to 1GB/s.</p>
+        </div>
+    </div>
+</section>
+
+
+
 </div>
 
    
