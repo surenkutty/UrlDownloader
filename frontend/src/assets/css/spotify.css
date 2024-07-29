@@ -1,4 +1,42 @@
 .spotify-page{
-    background-image:url('{spotifybackground}') ;
+    /* background-image:url('{spotifybackground}') ; */
     background-color: aqua;
+    height: 300px;
+    width: 100%;
 }
+
+/* spotify.css */
+.spotify-page {
+    text-align: center;
+    padding: 20px;
+    background-image: url('../images/spotify-background.jpeg');
+    background-size: cover;
+    color: white;
+  }
+  
+  .spotify-page input,
+  .spotify-page button {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .spotify-page button {
+    background-color: #1db954;
+    color: white;
+  }
+  
+  .spotify-page ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .spotify-page li {
+    margin: 10px 0;
+  }
+  
+  .spotify-page button:disabled {
+    background-color: grey;
+  }
+  
