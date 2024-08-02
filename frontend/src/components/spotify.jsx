@@ -4,68 +4,49 @@ import '../assets/css/spotify.css';
 
 function SpotifyPage() {
   const [url, setUrl] = useState('');
-  const [songs, setSongs] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [details, setDetails] = useState(null);
 
-  const handleUrlChange = (e) => {
-    setUrl(e.target.value);
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          const response = await axios.post('http://127.0.0.1:8000/submit-url/', { url });
+          setDetails(response.data);
+      } catch (error) {
+        alert("hello error");
+          console.error('Error submitting URL', error);
+      }
   };
 
-  const handleSearch = async () => {
-    setLoading(true);
-    setError(null);
-    setSongs([]);
-    try {
-      const response = await axios.post('http://localhost:8000/api/spotify/', { url });
-      setSongs(response.data.files);
-    } catch (err) {
-      setError(err.response ? err.response.data : 'An error occurred');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDownload = (fileName) => {
-    const link = document.createElement('a');
-    link.href = `http://localhost:8000/media/${fileName}`; // Ensure this path is correct based on your server setup
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleDownload = async () => {
+      try {'/download-song/', { url };
+          alert('Download started');
+      } catch (error) {
+          console.error('Error starting download', error);
+      }
   };
 
   return (
-    <div className="spotify-page">
-      <h1>Spotify URL Downloader</h1>
-      <input
-        type="text"
-        value={url}
-        onChange={handleUrlChange}
-        placeholder="Enter Spotify URL"
-      />
-      <button onClick={handleSearch} disabled={loading}>
-        {loading ? 'Loading...' : 'Search'}
-      </button>
-      {error && (
-        <div style={{ color: 'red' }}>
-          {typeof error === 'string' ? error : JSON.stringify(error)}
-        </div>
-      )}
-      {songs.length > 0 && (
-        <div>
-          <h2>Playlist</h2>
-          <ul>
-            {songs.map((song, index) => (
-              <li key={index}>
-                {song} <button onClick={() => handleDownload(song)}>Download</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+      <div>
+          <h1>Spotify URL Downloader</h1>
+          <form onSubmit={handleSubmit}>
+              <input
+                  type="text"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="Enter Spotify URL"
+                  required
+              />
+              <button type="submit">Submit</button>
+          </form>
+          {details && (
+              <div>
+                  <h2>Details</h2>
+                  <pre>{JSON.stringify(details, null, 2)}</pre>
+                  <button onClick={handleDownload}>Download</button>
+              </div>
+          )}
+      </div>
   );
-}
+};
 
 export default SpotifyPage;

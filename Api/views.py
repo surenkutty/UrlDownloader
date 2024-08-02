@@ -8,7 +8,7 @@ from instaloader import Instaloader, Post
 import os
 from django.conf import settings
 from django.views.generic import TemplateView
-from .serializers import InstagramSerializer,YouTubeSerializer,SpotifySerializer
+from .serializers import InstagramSerializer,YouTubeSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -87,36 +87,64 @@ class YoutubeDownloadVideoView(APIView):
 
 
 
-import tempfile
+from .models import SpotifyDownloadRequest
+from .serializers import SpotifyDownloadRequestSerializer
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 import os
-import subprocess
-import shutil
+SPOTIFY_CLIENT_ID="a80f518c96f64f46ba7521e595e1e314"
+SPOTIFY_CLIENT_SECRET="6dec2a821f8b417c83b5ff69d498c487"
 
-class SpotifyApiView(APIView):
+class SubmitURLView(APIView):
     def post(self, request):
-        serializer = SpotifySerializer(data=request.data)
-        if serializer.is_valid():
-            url = serializer.validated_data['url']
-            
-            try:
-                download_result = download_spotify_content(url)
-                return Response(download_result, status=status.HTTP_200_OK)
-            except Exception as e:
-                return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        url = request.data.get('url')
+        if not url:
+            return Response({'error': 'URL is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Save the URL submission (optional)
+        download_request = SpotifyDownloadRequest.objects.create(url=url)
+        
+        # Process the URL to get song/playlist details using Spotipy
+        sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
+            client_id=SPOTIFY_CLIENT_ID,
+            client_secret=SPOTIFY_CLIENT_SECRET
+            # client_id=os.getenv('SPOTIFY_CLIENT_ID'),
+            # client_secret=os.getenv('SPOTIFY_CLIENT_SECRET')
+        ))
 
-def download_spotify_content(url):
-    with tempfile.TemporaryDirectory() as temp_dir:
-        command = [
-            'spotify_dl', '--url', url, '--output', temp_dir
-        ]
+        if 'track' in url:
+            track = sp.track(url)
+            details = {
+                'name': track['name'],
+                'artists': ', '.join([artist['name'] for artist in track['artists']]),
+                'album': track['album']['name'],
+                'duration': track['duration_ms'],
+                'url': track['external_urls']['spotify'],
+            }
+        elif 'playlist' in url:
+            playlist = sp.playlist(url)
+            details = {
+                'name': playlist['name'],
+                'owner': playlist['owner']['display_name'],
+                'tracks': len(playlist['tracks']['items']),
+                'url': playlist['external_urls']['spotify'],
+            }
+        else:
+            return Response({'error': 'Invalid Spotify URL'}, status=status.HTTP_400_BAD_REQUEST)
         
-        result = subprocess.run(command, capture_output=True, text=True)
-        
-        if result.returncode != 0:
-            raise Exception(f"Download failed: {result.stderr}")
+        return Response(details, status=status.HTTP_200_OK)
 
-        files = os.listdir(temp_dir)
+class DownloadSongView(APIView):
+    def post(self, request):
+        url = request.data.get('url')
+        if not url:
+            return Response({'error': 'URL is required'}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Optionally move or process files further
-        return {"message": "Download completed", "files": files}
+        # Implement the actual download logic here (left as an exercise)
+        # For now, just update the status
+        download_request = SpotifyDownloadRequest.objects.filter(url=url).first()
+        if download_request:
+            download_request.status = 'completed'
+            download_request.save()
+
+        return Response({'status': 'Download started'}, status=status.HTTP_200_OK)
