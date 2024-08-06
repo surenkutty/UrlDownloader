@@ -3,10 +3,14 @@ import MobileUse from '../images/mobileuse.png';
 function SecondPage2() {
   return (
     <div className='tutorial'>
-      <div className='htu-container'>
+       <div className='htu-container'>
         <h1>How To Use</h1>
-      </div>
+     </div>
+        
+      
       <section>
+       
+      
         <div className="s3-section">
 
           <div className="s3-picture">
