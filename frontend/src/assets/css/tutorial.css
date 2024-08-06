@@ -7,10 +7,17 @@ section {
     justify-content: flex-start;
     /* align-items: flex-start; */
     /* padding: 20px; */
-    background-color: aliceblue;
+     
+    /* background-color: aliceblue; */
+   
   }
   
+  
   .s3-section {
+    background: #673AB7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #512DA8, #673AB7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #512DA8, #673AB7);
+    /* background-color: aliceblue; */
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -63,8 +70,9 @@ section {
    
   }
   .htu-container{
+
     color: #6c757d;
-    background-color: aliceblue;
+    background-color: black;
   }
   .body01{
     /* margin-left: 200px; */
@@ -176,13 +184,14 @@ section {
     flex-direction: row;
     justify-content: space-between;
     gap: 20px;
+    /* background-color: aliceblue; */
 }
 
 .card {
     background: #474642;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(230, 233, 235, 0.87);
-    width: 200px;
+    width: 250px;
     padding: 20px;
     height: 320px;
     text-align: center;
@@ -197,15 +206,15 @@ section {
 .cardimg2{
   border-radius: 20%;
   padding: 10px;
-  height: 90px;
-  width: 90px;
+  /* height: 90px;
+  width: 90px; */
   background-color: aliceblue;
 }
 .cardimg3{
   border-radius: 20%;
   padding: 10px;
-  height: 90px;
-  width: 90px;
+  /* height: 90px;
+  width: 90px; */
   background-color: aliceblue;
 }
 
@@ -216,19 +225,20 @@ section {
 
 .card h1 {
     font-size: 1em;
-    color:white;
+    /* color:white; */
     margin-bottom: 10px;
 }
 
 .card p {
     font-size: 0.9em;
-    color:white;
+    /* color:white; */
     line-height: 1.5;
 }
 .s4-section{
   display: flex;
     justify-content: center;
     align-items: center;
+    background-color: azure;
 }
 
 .why{

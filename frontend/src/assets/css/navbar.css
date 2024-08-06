@@ -1,62 +1,75 @@
-/* navbarcss */
-/* src/components/Navbar.css */
+/* src/assets/css/navbar.css */
 
 .navbar {
-    padding-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    /* background-color: #333; */
-    /* background-color: #a6c1ee; */
-    color:black;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  }
-  .nav-title{
-    background-color: aqua;
-  }
-  
-  .navbar-logo a {
-    text-decoration: none;
-    color:black;
-    font-size: 1.5rem;
-    font-weight: bold;
-    
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
 
-    /* margin-bottom: 10px; */
-    /* background-color: aqua; */
+.navbar-brand {
+  padding-left: 2px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color:white;
+  
+  /* background: #000; */
+}
+.brand .navbar-brand{
+  color: azure;
+}
+
+.navbar-nav .nav-link {
+  font-size: 1.2rem;
+  font-weight: bold;
+  position: relative;
+  color:white;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #007bff; /* Bootstrap primary color for hover */
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background: #007bff;
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+  left: 0;
+  background: #007bff;
+}
+
+.logo {
+  height: 50px; /* Adjust height as needed */
+  width: auto;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .navbar {
+    padding: 1rem;
   }
   
-  .navbar-links {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color:black;
-   
+  .navbar-brand {
+    font-size: 1.2rem;
   }
   
-  .navbar-links li {
-    display: inline;
-    
-  }
-  
-  .navbar-links a {
-    text-decoration: none;
-    color:black;
+  .navbar-nav .nav-link {
     font-size: 1rem;
   }
-  
-  .navbar-links a:hover {
-    color: #ddd;
-  }
-  .navbar-logo .logo{
-    height: 60px;
-    width: 90px;
-  }  
-  .navbar-logo{
-    align-items: center;
-    
-  }
+}
+.nav-item{
+  padding: 5px;
+  font-size:10px;
+}
+li{
+  font-size: 10px;
+}
