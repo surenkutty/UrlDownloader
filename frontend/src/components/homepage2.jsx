@@ -11,6 +11,7 @@ import '../assets/css/secondpage.css';
 import '../assets/css/tutorial.css';
 
 import Footer from './Footer';
+import ConsoleText from './consoleText';
 import SecondPage1 from './secondPage1';
 import SecondPage2 from './Secondpage2';
 import WhyToChoose from './whyToChoose';
@@ -36,7 +37,14 @@ const HomePage = () => {
       <div className="home-page">
         <div className="box">
           <h1 className='animated'>Url <span> Downloader</span></h1>
-          <h2 className='animated'>Search To Enjoy Your Journey!!</h2>
+          <div className="App">
+      <ConsoleText
+        words={['Search To Enjoy Your Journey!', 'Paste url', 'Download the videos.']}
+        id="text"
+        colors={['tomato', 'rebeccapurple', 'white']}
+      />
+    </div>
+          {/* <h2 className='animated'>Search To Enjoy Your Journey!!</h2> */}
         </div>
 
         <div className="image-container">
