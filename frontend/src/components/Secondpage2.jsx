@@ -4,7 +4,7 @@ function SecondPage2() {
   return (
     <div className='tutorial'>
        <div className='htu-container'>
-        <h1>How To Use</h1>
+        <h1 className='tut-h1'>How To Use</h1>
      </div>
         
       

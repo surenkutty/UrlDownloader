@@ -39,8 +39,10 @@ section {
 }
 
 .mobileuse {
-  height: 450px;
+  padding-top: 100px;
+  height: 500px;
   width: 500px;
+  margin-top: 60px;
   padding-left: 30px;
 }
 
@@ -52,8 +54,9 @@ section {
   flex-direction: column;
   align-items: flex-start;
   margin-right: 100px;
-  height: 500px;
+  height: 440px;
   width: 100%;
+  padding-top: 20px;
 }
 
 /* .s3-text-top {
@@ -137,6 +140,7 @@ section {
   /* background-color: #6c757d; */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: start;
+  color: white;
 
 }
 
@@ -145,7 +149,8 @@ section {
   margin-top: 0;
   margin-left: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #303030;
+  /* color: #303030; */
+  color: black;
 
 }
 
