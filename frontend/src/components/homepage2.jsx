@@ -39,9 +39,9 @@ const HomePage = () => {
           <h1 className='animated'>Url <span> Downloader</span></h1>
           <div className="App">
       <ConsoleText
-        words={['Search To Enjoy Your Journey!', 'Paste url', 'Download the videos.']}
+        words={['Search To Enjoy Your Journey!']}
         id="text"
-        colors={['tomato', 'rebeccapurple', 'white']}
+        colors={['tomato']}
       />
     </div>
           {/* <h2 className='animated'>Search To Enjoy Your Journey!!</h2> */}

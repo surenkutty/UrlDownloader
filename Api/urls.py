@@ -4,7 +4,7 @@ from django.contrib.staticfiles.views import serve
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
-from .views import InstagramAPIView,YoutubeDownloadVideoView,YoutubeVideoInfoView,SubmitURLView, DownloadSongView
+from .views import InstagramAPIView,YoutubeDownloadVideoView,YoutubeVideoInfoView,SpotifyDownloadAPIView
 urlpatterns = [
     # Your Django app views
     path('api/get-video-url/', InstagramAPIView.as_view(), name='get_video_url'),
@@ -12,8 +12,7 @@ urlpatterns = [
     
     path('get_youtube/', YoutubeVideoInfoView.as_view(), name='get_video_info'),
     path('download_video/', YoutubeDownloadVideoView.as_view(), name='download_video'),
-    path('submit-url/', SubmitURLView.as_view(), name='submit-url'),
-    path('download-song/', DownloadSongView.as_view(), name='download-song'),
+    path('spotify-url/', SpotifyDownloadAPIView.as_view(), name='submit-url'),
 
     # Serve React static files
     re_path(r'^static/(?P<path>.*)$', serve),

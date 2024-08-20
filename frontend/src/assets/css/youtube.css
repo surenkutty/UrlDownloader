@@ -86,11 +86,13 @@ body, html {
 }
 
 .video-title{
+  color: black;
   height: 100px;
   width: 400px;
 }
 .streams-container {
-  margin-top: 20px;
+  padding-top: 20px;
+  margin-top: 80px;
   height: 300px;
   width: 400px;
   /* border: 1px solid black; */
@@ -123,8 +125,9 @@ body, html {
 }
 
 .download-button {
+
   padding: 10px 20px;
-  border: none;
+  border:none;
   border-radius: 5px;
   background-color: #4CAF50;
   color: white;
@@ -137,6 +140,7 @@ body, html {
   margin-left: auto;
   margin-right: auto;
   /* margin-bottom: 400px; */
+  margin-bottom: 100px;
 }
 
 .download-button:hover {

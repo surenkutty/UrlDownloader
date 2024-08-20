@@ -85,66 +85,59 @@ class YoutubeDownloadVideoView(APIView):
 # downloader/views.py
 
 
-
-
-from .models import SpotifyDownloadRequest
-from .serializers import SpotifyDownloadRequestSerializer
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 import os
-SPOTIFY_CLIENT_ID="a80f518c96f64f46ba7521e595e1e314"
-SPOTIFY_CLIENT_SECRET="6dec2a821f8b417c83b5ff69d498c487"
+import subprocess
+import shutil
 
-class SubmitURLView(APIView):
+class SpotifyDownloadAPIView(APIView):
     def post(self, request):
-        url = request.data.get('url')
-        if not url:
-            return Response({'error': 'URL is required'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Save the URL submission (optional)
-        download_request = SpotifyDownloadRequest.objects.create(url=url)
-        
-        # Process the URL to get song/playlist details using Spotipy
-        sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
-            client_id=SPOTIFY_CLIENT_ID,
-            client_secret=SPOTIFY_CLIENT_SECRET
-            # client_id=os.getenv('SPOTIFY_CLIENT_ID'),
-            # client_secret=os.getenv('SPOTIFY_CLIENT_SECRET')
-        ))
+        spotify_url = request.data.get('url')
 
-        if 'track' in url:
-            track = sp.track(url)
-            details = {
-                'name': track['name'],
-                'artists': ', '.join([artist['name'] for artist in track['artists']]),
-                'album': track['album']['name'],
-                'duration': track['duration_ms'],
-                'url': track['external_urls']['spotify'],
-            }
-        elif 'playlist' in url:
-            playlist = sp.playlist(url)
-            details = {
-                'name': playlist['name'],
-                'owner': playlist['owner']['display_name'],
-                'tracks': len(playlist['tracks']['items']),
-                'url': playlist['external_urls']['spotify'],
-            }
-        else:
-            return Response({'error': 'Invalid Spotify URL'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        return Response(details, status=status.HTTP_200_OK)
+        if not spotify_url:
+            return Response({'error': 'Spotify URL is required'}, status=status.HTTP_400_BAD_REQUEST)
 
-class DownloadSongView(APIView):
-    def post(self, request):
-        url = request.data.get('url')
-        if not url:
-            return Response({'error': 'URL is required'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Implement the actual download logic here (left as an exercise)
-        # For now, just update the status
-        download_request = SpotifyDownloadRequest.objects.filter(url=url).first()
-        if download_request:
-            download_request.status = 'completed'
-            download_request.save()
+        try:
+            # Set the output directory where the song/playlist will be saved
+            temp_dir = 'downloads/'  # Temporary download location
+            os.makedirs(temp_dir, exist_ok=True)
 
-        return Response({'status': 'Download started'}, status=status.HTTP_200_OK)
+            # Command to download the song or playlist using spotdl
+            download_command = ['spotdl', '--output', temp_dir, spotify_url]
+
+            # Execute the command safely using subprocess
+            subprocess.run(download_command, check=True)
+
+            # Move downloaded files to the media directory
+            media_dir = os.path.join(settings.MEDIA_ROOT, 'songs/')
+            os.makedirs(media_dir, exist_ok=True)
+
+            downloaded_files = os.listdir(temp_dir)
+            download_links = []
+
+            for file in downloaded_files:
+                if file.endswith('.mp3'):
+                    # Move the file to the media directory
+                    shutil.move(os.path.join(temp_dir, file), media_dir)
+                    download_links.append(f'{settings.MEDIA_URL}songs/{file}')
+
+            # Cleanup the temporary download directory
+            shutil.rmtree(temp_dir)
+
+            if not download_links:
+                return Response({'error': 'No files were downloaded. Please check the Spotify URL.'},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            return Response({
+                'message': 'Download completed successfully.',
+                'files': download_links,
+            }, status=status.HTTP_200_OK)
+
+        except subprocess.CalledProcessError as e:
+            return Response({'error': 'An error occurred during the download process.'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
