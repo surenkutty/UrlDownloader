@@ -84,14 +84,39 @@ class YoutubeDownloadVideoView(APIView):
 #spotify views
 # downloader/views.py
 
-
-# views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import os
 import subprocess
 import shutil
+from django.conf import settings
+from spotdl import Spotdl
+
+class SpotifySearchAPIView(APIView):
+    def post(self, request):
+        spotify_url = request.data.get('url')
+        
+        if not spotify_url:
+            return Response({'error': 'Spotify URL is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Fetch song details using Spotdl or any suitable library
+            spotdl = Spotdl()
+            song_info = spotdl.get_song_info(spotify_url)
+
+            if not song_info:
+                return Response({'error': 'Unable to fetch song details.'}, status=status.HTTP_404_NOT_FOUND)
+
+            return Response({
+                'title': song_info['title'],
+                'artist': song_info['artist'],
+                'album': song_info['album'],
+                'duration': song_info['duration'],
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class SpotifyDownloadAPIView(APIView):
     def post(self, request):
@@ -109,7 +134,19 @@ class SpotifyDownloadAPIView(APIView):
             download_command = ['spotdl', '--output', temp_dir, spotify_url]
 
             # Execute the command safely using subprocess
-            subprocess.run(download_command, check=True)
+            process = subprocess.Popen(download_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            # Capture progress or output here (if needed)
+            for line in process.stdout:
+                if "Download" in line.decode():
+                    # Optionally, send progress updates to the client
+                    print(line.decode().strip())  # Replace this with actual logic if needed
+
+            process.wait()
+
+            if process.returncode != 0:
+                return Response({'error': 'An error occurred during the download process.'},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
             # Move downloaded files to the media directory
             media_dir = os.path.join(settings.MEDIA_ROOT, 'songs/')
