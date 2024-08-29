@@ -126,6 +126,9 @@ USE_I18N = True
 USE_TZ = True
 
 
+SPOTIFY_CLIENT_ID='a80f518c96f64f46ba7521e595e1e314'
+SPOTIFY_CLIENT_SECRET='6dec2a821f8b417c83b5ff69d498c487'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 

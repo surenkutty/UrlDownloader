@@ -82,99 +82,77 @@ class YoutubeDownloadVideoView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #spotify views
-# downloader/views.py
-
+# views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import os
 import subprocess
-import shutil
-from django.conf import settings
-from spotdl import Spotdl
+import json
+from pathlib import Path
 
-class SpotifySearchAPIView(APIView):
+class SpotifySongView(APIView):
     def post(self, request):
         spotify_url = request.data.get('url')
         
         if not spotify_url:
-            return Response({'error': 'Spotify URL is required'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Spotify URL is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Fetch song details using Spotdl or any suitable library
-            spotdl = Spotdl()
-            song_info = spotdl.get_song_info(spotify_url)
+            command = [
+                'spotify_dl',
+                '-l', spotify_url,
+                '-j'  # JSON output for song details
+            ]
 
-            if not song_info:
-                return Response({'error': 'Unable to fetch song details.'}, status=status.HTTP_404_NOT_FOUND)
+            result = subprocess.run(command, capture_output=True, text=True)
+            
+            if result.returncode != 0:
+                return Response({"error": result.stderr.strip()}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            return Response({
-                'title': song_info['title'],
-                'artist': song_info['artist'],
-                'album': song_info['album'],
-                'duration': song_info['duration'],
-            }, status=status.HTTP_200_OK)
+            song_details = json.loads(result.stdout)
+            return Response(song_details, status=status.HTTP_200_OK)
 
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class SpotifyDownloadAPIView(APIView):
-    def post(self, request):
+
+
+class SpotifyDownloadView(APIView):
+     def post(self, request):
         spotify_url = request.data.get('url')
-
+        
         if not spotify_url:
-            return Response({'error': 'Spotify URL is required'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Spotify URL is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Set the output directory where the song/playlist will be saved
-            temp_dir = 'downloads/'  # Temporary download location
-            os.makedirs(temp_dir, exist_ok=True)
+            # Get the path to the user's Downloads folder
+            downloads_folder = str(Path.home() / "Downloads")
+            if not os.path.exists(downloads_folder):
+                return Response({"error": "Downloads directory does not exist"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            # Command to download the song or playlist using spotdl
-            download_command = ['spotdl', '--output', temp_dir, spotify_url]
+            # Use a temporary file name
+            temp_filename = "downloaded_song.mp3"
+            download_path = os.path.join(downloads_folder, temp_filename)
 
-            # Execute the command safely using subprocess
-            process = subprocess.Popen(download_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            # Run spotify_dl to download the song directly to the Downloads folder
+            command = [
+                'spotify_dl',
+                '-l', spotify_url,
+                '-o', download_path
+            ]
 
-            # Capture progress or output here (if needed)
-            for line in process.stdout:
-                if "Download" in line.decode():
-                    # Optionally, send progress updates to the client
-                    print(line.decode().strip())  # Replace this with actual logic if needed
+            result = subprocess.run(command, capture_output=True, text=True)
 
-            process.wait()
+            if result.returncode != 0:
+                return Response({"error": result.stderr.strip()}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            if process.returncode != 0:
-                return Response({'error': 'An error occurred during the download process.'},
-                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # Verify that the file was created
+            if not os.path.exists(download_path):
+                return Response({"error": "Failed to save the file."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            # Move downloaded files to the media directory
-            media_dir = os.path.join(settings.MEDIA_ROOT, 'songs/')
-            os.makedirs(media_dir, exist_ok=True)
+            # Return a response to let the client know the file is ready
+            return Response({"message": "File downloaded successfully", "file_path": download_path}, status=status.HTTP_200_OK)
 
-            downloaded_files = os.listdir(temp_dir)
-            download_links = []
-
-            for file in downloaded_files:
-                if file.endswith('.mp3'):
-                    # Move the file to the media directory
-                    shutil.move(os.path.join(temp_dir, file), media_dir)
-                    download_links.append(f'{settings.MEDIA_URL}songs/{file}')
-
-            # Cleanup the temporary download directory
-            shutil.rmtree(temp_dir)
-
-            if not download_links:
-                return Response({'error': 'No files were downloaded. Please check the Spotify URL.'},
-                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            return Response({
-                'message': 'Download completed successfully.',
-                'files': download_links,
-            }, status=status.HTTP_200_OK)
-
-        except subprocess.CalledProcessError as e:
-            return Response({'error': 'An error occurred during the download process.'},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
